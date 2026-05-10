@@ -120,6 +120,23 @@ def test_analyze_lanterns_ignores_unexpected_lantern_for_wrong_section():
     assert result["unexpected_lanterns"] == {"silver-fox"}
     assert result["wrong_section_lanterns"] == {}
 
+def test_analyze_lanterns_empty_log_with_expected():
+    expected_lanterns = {"river-dragon", "blue-crane"}
+    lantern_log = []
+    correct_sections = {
+        "river-dragon": "North Gate",
+        "blue-crane": "River Walk",
+    }
+
+    result = analyze_lanterns(expected_lanterns, lantern_log, correct_sections)
+
+    assert result["seen_lanterns"] == set()
+    assert result["missing_lanterns"] == {"river-dragon", "blue-crane"}
+    assert result["unexpected_lanterns"] == set()
+    assert result["duplicate_lanterns"] == set()
+    assert result["count_by_section"] == {}
+    assert result["wrong_section_lanterns"] == {}
+
 
 # TODO: Add at least one more meaningful test of your own before submitting.
 # Good options:
